@@ -69,6 +69,41 @@ public class ProductTest {
         Assertions.assertArrayEquals(expected, actual);
     }
 
+    @Test
+    public void testSearchOneProduct() {
+        ProductRepository repo = new ProductRepository();
+        ProductManager manager = new ProductManager(repo);
+        Book book1 = new Book(1, "Stalker", 150, "Strugatsky");
+        Book book2 = new Book(2, "Stalker2", 650, "Strugatsky");
+        Book book3 = new Book(3, "Metro 2033", 850, "Gluhovsky");
+        Book book4 = new Book(4, "Metro 2035", 300, "Gluhovsky");
+
+        manager.add(book1);
+        manager.add(book4);
+
+        Product[] expected = {book1};
+        Product[] actual = manager.searchBy("Stalker");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testSearchNullProduct() {
+        ProductRepository repo = new ProductRepository();
+        ProductManager manager = new ProductManager(repo);
+        Book book1 = new Book(1, "Stalker", 150, "Strugatsky");
+        Book book2 = new Book(2, "Stalker2", 650, "Strugatsky");
+        Book book3 = new Book(3, "Metro 2033", 850, "Gluhovsky");
+        Book book4 = new Book(4, "Metro 2035", 300, "Gluhovsky");
+
+        Product[] expected = {};
+        Product[] actual = manager.searchBy("Harry Potter");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+
+
     //тест на удаление нескольких товаров
     @Test
     public void testRemoveBookAndSmartphoneRepo() {
@@ -145,18 +180,6 @@ public class ProductTest {
 
         Assertions.assertArrayEquals(expected, actual);
 
-    }
-
-    //тест на поиск без товара
-    @Test
-    public void testNullProduct() {
-        ProductRepository repo = new ProductRepository();
-        ProductManager manager = new ProductManager(repo);
-
-        Product[] expected = {};
-        Product[] actual = repo.findAll();
-
-        Assertions.assertArrayEquals(expected, actual);
     }
 
 
